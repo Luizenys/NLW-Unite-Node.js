@@ -1,4 +1,8 @@
 import fastify from "fastify";
+
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUI from "@fastify/swagger-ui";
+
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { createEvent } from "./routes/create-event";
 import { registerForEvent } from "./routes/register-for-event";
@@ -8,6 +12,12 @@ import { checkIn } from "./routes/check-in";
 import { getEventAttendees } from "./routes/get-event-attendees";
 
 const app = fastify()
+
+app.register(fastifySwagger, {
+    swagger: {
+        consumes: ['application/json']
+    }
+})
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
